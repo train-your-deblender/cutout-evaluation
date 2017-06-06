@@ -1,0 +1,3 @@
+[submodule "blendcollection"]
+	path = blendcollection
+	url = git@github.com:train-your-deblender/blendcollection.git
