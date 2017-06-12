@@ -862,7 +862,8 @@ def make_cutouts(data_root, blends_to_catalog_map_filename, sextraction_result, 
     for seg_id, cat_ids in seg2cat.items():
         row = _get_row(sexcat, seg_id)
         blend_name = format_candels_blend_name(field_name, row['ALPHA_J2000'], row['DELTA_J2000'], kernel_fwhm_arcsec)
-        filename = blend_name.replace(' ', '_') + '.fits'
+        blend_id = blend_name.replace(' ', '_')
+        filename = blend_id + '.fits'
         outpath = join(outdir, filename)
         cutout_files.append(outpath)
 
@@ -871,6 +872,7 @@ def make_cutouts(data_root, blends_to_catalog_map_filename, sextraction_result, 
 
         primary_hdu = fits.PrimaryHDU()
         primary_hdu.header['NAME'] = blend_name
+        primary_hdu.header['BLEND-ID'] = blend_id
         primary_hdu.header['FWHMAS'] = (kernel_fwhm_arcsec, 'Kernel FWHM in arcseconds')
         primary_hdu.header['DETIMAGE'] = (basename(detection_image), 'Detection image')
         primary_hdu.header['DETFILTR'] = (detection_filtername, 'Detection image filter name')
@@ -902,7 +904,7 @@ def make_cutouts(data_root, blends_to_catalog_map_filename, sextraction_result, 
             data=blend,
             header=seeing_thumb.wcs.to_header()
         )
-        blend_hdu.header['EXTNAME'] = 'BLEND'
+        blend_hdu.header['EXTNAME'] = 'BLENDED'
         blend_hdu.header['FWHMAS'] = (kernel_fwhm_arcsec, 'Kernel FWHM in arcseconds')
         extensions.append(blend_hdu)
 
@@ -914,12 +916,12 @@ def make_cutouts(data_root, blends_to_catalog_map_filename, sextraction_result, 
         extensions.append(truth_hdu)
 
         # Filter names and wavelengths
-        filters_hdu = fits.BinTableHDU.from_columns([
-            fits.Column(name='filter', format='5A', array=filters),
+        bands_hdu = fits.BinTableHDU.from_columns([
+            fits.Column(name='name', format='5A', array=filters),
             fits.Column(name='wavelength', format='E', array=wavelengths),
         ])
-        filters_hdu.header['EXTNAME'] = 'FILTERS'
-        extensions.append(filters_hdu)
+        bands_hdu.header['EXTNAME'] = 'BANDS'
+        extensions.append(bands_hdu)
 
         # This might be really stupid, but I don't want to assume CANDELS FITS
         # catalogs have consecutive indices...
@@ -951,7 +953,7 @@ def plot_for_blend(filename, output_filename):
     ax_seg.set_title('Segmap')
     panels = [
         (ax_det, WCS(blend_fits['TRUTH'].header), blend_fits['TRUTH'].data[detection_filter_index]),
-        (ax_sl, WCS(blend_fits['BLEND'].header), blend_fits['BLEND'].data[detection_filter_index]),
+        (ax_sl, WCS(blend_fits['BLENDED'].header), blend_fits['BLENDED'].data[detection_filter_index]),
         (ax_seg, WCS(blend_fits['SEGMAP'].header), blend_fits['SEGMAP'].data),
     ]
     for ax, wcs, data in panels:
@@ -959,6 +961,7 @@ def plot_for_blend(filename, output_filename):
         ax.set_xlim(0, data.shape[1] - 1)
         ax.set_ylim(0, data.shape[0] - 1)
 
+    wcs = WCS(blend_fits['SEGMAP'].header)
     # overplot original components only on segmap
     for row in blend_fits['CATALOG'].data:
         ax_seg.scatter(*wcs.all_world2pix(row['RA'], row['DEC'], 0),
