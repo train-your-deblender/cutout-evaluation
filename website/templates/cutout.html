@@ -1,0 +1,41 @@
+<div class="blend-scene">
+    <h2>{{ blend.id }}</h2>
+    <div class="filename"><a href="blends/{{ blend.filename }}" target="_blank">{{ blend.filename }}</a></div>
+    <div class="preview">
+        <div class="glance">
+            <div>
+                <img src="images/{{ blend.id }}_rgb.png" alt="Collection">
+                <p>{{ width_arcsec }}&Prime; &times; {{ height_arcsec }}&Prime;</p>
+                <p>(R, G, B) = ({{ red_band }}, {{ green_band }}, {{ blue_band }})</p>
+            </div>
+        </div>
+        <div class="comparison">
+            <ol class="blend-tiles">
+                {% for band_name in blend.bands %}
+                <li>{{ band_name }}<img src="images/{{ blend.id }}_{{ band_name }}_blend.png" alt="{{ band_name }} in LSST-like seeing conditions"></li>
+                {% endfor %}
+            </ol>
+            <ol class="truth-tiles">
+                {% for band_name in blend.bands %}
+                <li>{{ band_name }}<img src="collections/{{ collection }}/{{ blend.id }}_{{ band_name }}_truth.png" alt="{{ band_name }} at higher resolution"></li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+    <div class="catalog">
+        <table>
+            <tr>
+                {% for column_name, column_desc in catalog_columns %}
+                <th>{{ column_name }} {{ column desc}}</th>
+                {% endfor %}
+            </tr>
+            {% for row in table %}
+            <tr>
+                {% for column_name, _ in catalog_columns %}
+                <td>{{ row[column_name] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>

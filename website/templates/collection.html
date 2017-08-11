@@ -1,0 +1,45 @@
+{% set static_path = '../' %}
+{% extends "base.html" %}
+{% block content %}
+  <div class="background">
+    <h1>{{ collection.name }}</h1>
+    <dl class="collection-info">
+      <dt>Attribution</dt>
+      <dd>{{ collection.attribution }}</dd>
+      <dt>Number of scenes</dt>
+      <dd>{{ cutouts|length }}</dd>
+      <dt>Total size (zip)</dt>
+      <dd>{{ collection.archive_size|filesizeformat }}</dd>
+    </dl>
+    <a class="button primary big" href="{{ collection.archive_filename }}" target="_blank">Download collection</a>
+    {{ collection.description|markdown }}
+  </div>
+  {% for scene in cutouts %}
+  <div class="blend-scene">
+    <h2>{{ scene.cutout.name }}</h2>
+    <div class="filename"><code>{{ scene.cutout_filename }}</code></div>
+    <div class="preview">
+      <div class="comparison">
+        <img src="images/{{ scene.preview_all_filename }}" alt="Comparison of blended and truth images in each band">
+      </div>
+      <div class="glance">
+        <div class="rgb-preview">
+          <img src="images/{{ scene.preview_rgb_filename }}" alt="RGB preview of scene">
+        </div>
+        <div class="rgb-preview-info">
+          <p>2.5&Prime; &times; 2.5&Prime;</p>
+          <p>(R, G, B) = ({{ scene.red_band }}, {{ scene.green_band }}, {{ scene.blue_band }})</p>
+        </div>
+      </div>
+    </div>
+    <div class="catalog">
+      <table>
+        <tr>{% for _, desc in scene.catalog_columns %}<th>{{ desc }}</th>{% endfor %}</tr>
+        {% for row in scene.cutout.catalog %}
+        <tr>{% for col, _ in scene.catalog_columns %}<td>{{ row[col] }}</td>{% endfor %}</tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+  {% endfor %}
+{% endblock %}

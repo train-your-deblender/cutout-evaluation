@@ -1,0 +1,40 @@
+name: QuickScene Two Galaxies (A)
+shortname: TwoGalaxies-A
+glob_pattern: TwoGalaxies-A--*.fits
+directory: ../../synthetic/outputs/TwoGalaxies-A/
+short_description: Two galaxies oriented at right angles with various redshifts and separations.
+preview_image: preview.png
+description: |
+    These scenes were produced with a "quick and dirty" QuickScene code
+    that emits counts images with realistic photometry for galaxies
+    with two different SEDs.
+
+    The scene shows two elliptical galaxies with different SEDs from the Bruzal-Charlot Atlas (bc95) positioned on the horizontal axis through the center of the image. The "A" galaxy major axis is aligned with the x axis and the "B" galaxy major axis is rotated 90 degrees.
+
+    We vary these parameters:
+
+    - Galaxy B magnitude (= Galaxy A mag +  Δm) — Δm ∈ {0, 1, 2, 3}
+    - difference in redshift between two galaxies = Δz — Δz ∈ {0, 1, 2}
+    - center-to-center separation along x axis = Δx — Δx ∈ {0.5″, 0.75″, 1.0″, 1.25″}
+ 
+    We are holding these parameters constant to make the high-dimensional parameter space a little more manageable at first:
+
+    - effective radius (25 px or 5 arcsec for both)
+    - Sérsic index (n=4 for both)
+    - ellipticity (0.5 for both)
+    - Galaxy A magnitude (18 ABmag normalized to SDSS _r_)
+
+    We're using these bandpasses from SDSS: u, g, r, i, z.
+attribution: Joseph Long and Dr. Harry Ferguson, Space Telescope Science Institute
+bands: [u, g, r, i, z]
+display:
+    rgb:
+        bands: [u, r, z]
+    catalog:
+        columns:
+            - [x, X (arcsec)]
+            - [y, Y (arcsec)]
+            - [model, Model function]
+            - [abmag, ABmag (magnitude)]
+            - [spectrum, Template spectrum]
+            - [redshift, Redshift applied to template spectrum]

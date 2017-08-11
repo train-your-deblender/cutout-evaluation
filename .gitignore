@@ -2,6 +2,9 @@ __pycache__
 *.pyc
 ._*
 .ipynb_checkpoints
+.DS_Store
 circus/*.pid
 *.fits
 .idea
+synthetic/outputs
+website/_build

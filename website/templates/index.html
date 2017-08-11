@@ -1,0 +1,56 @@
+{% set static_path = '' %}
+{% extends "base.html" %}
+{% block content %}
+  <div class="row with-columns">
+    <div class="background">
+      <p style="font-style: italic">Authors: Dr. Henry C. Ferguson and Joseph Long (<a href="http://www.stsci.edu/" target="_blank">Space Telescope Science Institute</a>)</p>
+      <p>This dataset contains collections of astronomical scenes featuring arrangements of objects drawn from simulations and observations that would be blended in seeing-limited observations.</p>
+
+      <p>Each scene is provided in multiple bandpasses to inform the development of deblending algorithms that leverage color information. Both a "truth" image at the sampling of the original data and a "seeing-limited" image (convolved with a FWHM = 0.7&Prime; Airy disk) are provided for each scene.</p>
+      <h2>Using the blend collections</h2>
+      <p>If you use Python, we have a quick API wrapper for the FITS files available <a href="#">here</a>:</p>
+<pre>>>> from blendcollection import load_blend
+>>> b = load_blend('./UDS_34.25905270-5.1673648_0.78arcsec_bands.fits')
+>>> plt.scatter(b.catalog['RA'], b.catalog['Dec'])
+</pre>
+      <img src="http://placehold.it/300x200" alt="Catalog">
+<pre>
+>>> plt.figure()
+>>> b.plot_truth(overlay=True)
+</pre>
+      <img src="http://placehold.it/300x200" alt="Collection">
+      <h2>Contributing collections</h2>
+      <p>This site and associated tools are hosted at GitHub, and we welcome <a href="#">pull requests</a>.</p>
+      <p>For inclusion on this site, individual scenes should be stored as separate FITS files.</p>
+      <!-- <h2>Submitting a benchmark</h2>
+      <p>To benchmark your algorithm, it should be possible to run it from the command line given an input file and an output directory. For example:</p>
+      <pre>$ python improved_deblender.py \
+./UDS_34.25905270-5.1673648_0.78arcsec_bands.fits \
+./benchmark-outputs/</pre> -->
+      
+      <h2>Acknowledgements</h2>
+      <p>This work was supported by the <a href="http://www.stsci.edu" target="_blank">STScI</a> Directors Discretionary Research Fund (DDRF) Proposal 82461. We would also like to acknowledge the assistance of the LSST Data Management team in using their
+        software stack.</p>
+      <img src="https://static1.squarespace.com/static/51815eaae4b0841085acb675/t/56684e0e69492e802517bb64/1449676302205/stsci_pri_combo_mark_white_bkgd.png" style="height: 140px; margin: 0 auto;">
+    </div>
+    <div class="collections">
+      <h2>Blend collections</h2>
+      {% for collection in collections %}
+      <div class="blend-collection">
+        <div class="preview" style="background-image: url({{ collection.shortname }}/{{ collection.preview_image }})">
+        </div>
+        <div class="info">
+          <h1>{{ collection.name }}</h1>
+          <p>{{ collection.short_description }}</p>
+          <p class="attribution">Attribution: {{ collection.attribution }}.</p>
+          <ul class="flat">
+            <li>Cutouts: {{ collection.cutouts|length }}</li>
+            <li>Total size: {{ collection.archive_size|filesizeformat }}</li>
+          </ul>
+          <a class="button button-primary" href="{{ collection.shortname }}/{{ collection.archive_filename }}">Download</a> <a class="button" href="{{ collection.shortname }}">Details</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

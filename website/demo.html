@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Train Your Deblender</title>
+  <link rel="stylesheet" href="static/normalize.css" type="text/css" media="screen">
+  <link rel="stylesheet" href="static/styles.css" type="text/css" media="screen">
+</head>
+<body>
+<header class="super">
+    <h1>Train Your Deblender</h1>
+<!--     <h2>Harry Ferguson, Joseph Long</h2> -->
+</header>
+
+<ul id="demo-nav">
+  <li><a href="#main">Main</a></li>
+  <li><a href="#collection-page">Collection page</a></li>
+</ul>
+
+<div class="container" id="main">
+  <div class="row with-columns">
+    <div class="background">
+      <p style="font-style: italic">Authors: Dr. Henry C. Ferguson and Joseph Long (<a href="http://www.stsci.edu/" target="_blank">Space Telescope Science Institute</a>)</p>
+      <p>This dataset contains collections of astronomical scenes featuring arrangements of objects drawn from simulations and observations that would be blended in seeing-limited observations.</p>
+
+      <p>Each scene is provided in multiple bandpasses to inform the development of deblending algorithms that leverage color information. Both a "truth" image at the sampling of the original data and a "seeing-limited" image (convolved with a FWHM = 0.7&Prime; Airy disk) are provided for each scene.</p>
+      <h2>Using the blend collections</h2>
+      <p>If you use Python, we have a quick API wrapper for the FITS files available <a href="#">here</a>:</p>
+<pre>>>> from blendcollection import load_blend
+>>> b = load_blend('./UDS_34.25905270-5.1673648_0.78arcsec_bands.fits')
+>>> plt.scatter(b.catalog['RA'], b.catalog['Dec'])
+</pre>
+      <img src="http://placehold.it/300x200" alt="Catalog">
+<pre>
+>>> plt.figure()
+>>> b.plot_truth(overlay=True)
+</pre>
+      <img src="http://placehold.it/300x200" alt="Collection">
+      <h2>Contributing collections</h2>
+      <p>This site and associated tools are hosted at GitHub, and we welcome <a href="#">pull requests</a>.</p>
+      <p>For inclusion on this site, individual scenes should be stored as separate FITS files.</p>
+      <h2>Submitting a benchmark</h2>
+      <p>To benchmark your algorithm, it should be possible to run it from the command line given an input file and an output directory. For example:</p>
+      <pre>$ python improved_deblender.py \
+./UDS_34.25905270-5.1673648_0.78arcsec_bands.fits \
+./benchmark-outputs/</pre>
+      
+      <h2>Acknowledgements</h2>
+      <p>This work was supported by the <a href="http://www.stsci.edu" target="_blank">STScI</a> Directors Discretionary Research Fund (DDRF) Proposal 82461. We would also like to acknowledge the assistance of the LSST Data Management team in using their
+        software stack.</p>
+      <img src="https://static1.squarespace.com/static/51815eaae4b0841085acb675/t/56684e0e69492e802517bb64/1449676302205/stsci_pri_combo_mark_white_bkgd.png" style="height: 140px; margin: 0 auto;">
+    </div>
+    <div class="collections">
+      <h2>Blend collections</h2>
+      <div class="blend-collection">
+        <div class="preview">
+        </div>
+        <div class="info">
+          <h1>GOODS-S</h1>
+          <p>Objects in Hubble mosaics that would be a single connected component in the seeing limit. At least one object in the blend has a spectroscopic redshift, and the minimum &Delta;<em>z</em> is 0.5.</p>
+          <p class="attribution">Attribution: big CANDELS paper.</p>
+          <ul class="flat">
+            <li>Cutouts: 14</li>
+            <li>Total size: 10 GB</li>
+          </ul>
+          <a class="button" href="#">Details</a>
+          <a class="button" href="#">Preview</a>
+          <a class="button primary" href="#">Download</a>
+        </div>
+      </div>
+      <div class="blend-collection">
+        <div class="preview">
+        </div>
+        <div class="info">
+          <h1>Synthetic Scenes</h1>
+          <p>Quick simulations to explore the parameter space of galaxy separations and redshift differences in multi-band imagery.</p>
+          <p class="attribution">Attribution: authors of this site.</p>
+          <ul class="flat">
+            <li>Cutouts: 14</li>
+            <li>Total size: 10 GB</li>
+          </ul>
+          <a class="button button-primary" href="#">Download</a> <a class="button" href="#">Details</a>
+        </div>
+      </div>
+      <div class="blend-collection">
+        <div class="preview">
+        </div>
+        <div class="info">
+          <h1>UDS</h1>
+          <ul class="flat">
+            <li>Cutouts: 14</li>
+            <li>Total size: 10 GB</li>
+          </ul>
+          <a class="button button-primary" href="#">Download</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Collection page -->
+<div class="container" id="collection-page">
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam consequat enim eu lorem pretium, at interdum metus feugiat. Donec convallis, odio vitae vulputate dapibus, lacus lectus placerat eros, vitae hendrerit massa velit dapibus eros. In a pellentesque est. Curabitur eleifend lacinia ipsum vel aliquet. Mauris dictum, orci vitae bibendum tempus, ante lorem viverra neque, sed hendrerit dolor ligula non augue. Pellentesque egestas, augue a venenatis luctus, augue augue congue sem, id finibus libero dui vitae purus. Donec eu suscipit libero. Quisque a faucibus arcu, et suscipit ipsum.
+  </div>
+  <div class="background">
+    <h1>GOODS-S</h1>
+    <p>Objects in Hubble mosaics that would be a single connected component in the seeing limit. At least one object in the blend has a spectroscopic redshift, and the minimum &Delta;<em>z</em> is 0.5.</p>
+    <p class="attribution">Attribution: big CANDELS paper.</p>
+    <ul class="flat">
+      <li>Cutouts: 14</li>
+      <li>Total size: 10 GB</li>
+    </ul>
+    <a class="button primary" href="#">Download</a>
+  </div>
+  <div class="blend-scene">
+    <h2>GOODS-S 115.600 +56.600 0.7 arcsec</h2>
+    <div class="preview">
+      <div class="glance">
+        <div>
+          <img src="http://placehold.it/200x200" alt="Collection">
+          <p>2.5&Prime; &times; 2.5&Prime;</p>
+          <p>(R, G, B) = (F125W, F110W, F606W)</p>
+        </div>
+      </div>
+      <div class="comparison">
+        <ol class="blend-tiles">
+          <li>Blend 1<img src="http://placehold.it/128x128" alt="blend"></li>
+          <li>Blend 2<img src="http://placehold.it/128x128" alt="blend"></li>
+          <li>Blend 3<img src="http://placehold.it/128x128" alt="blend"></li>
+          <!-- <li>Blend 4<img src="http://placehold.it/128x128" alt="blend"></li>
+          <li>Blend 5<img src="http://placehold.it/128x128" alt="blend"></li> -->
+        </ol>
+        <ol class="truth-tiles">
+          <li><img src="http://placehold.it/128x128" alt="truth">Truth 1</li>
+          <li><img src="http://placehold.it/128x128" alt="truth">Truth 2</li>
+          <li><img src="http://placehold.it/128x128" alt="truth">Truth 3</li>
+          <!-- <li><img src="http://placehold.it/128x128" alt="truth">Truth 4</li>
+          <li><img src="http://placehold.it/128x128" alt="truth">Truth 5</li> -->
+        </ol>
+      </div>
+    </div>
+    <div class="catalog">
+      <table>
+        <tr><th>ID</th><th>Header</th><th>Header</th><th>Header</th><th>Header</th></tr>
+        <tr><td>1</td><td>Data</td><td>Data</td><td>Data</td><td>Data</td></tr>
+        <tr><td>2</td><td>Data</td><td>Data</td><td>Data</td><td>Data</td></tr>
+        <tr><td>3</td><td>Data</td><td>Data</td><td>Data</td><td>Data</td></tr>
+        <tr><td>4</td><td>Data</td><td>Data</td><td>Data</td><td>Data</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="blend-scene">
+    <h2>GOODS-S 115.600 +56.600 0.7 arcsec</h2>
+    <div class="filename"><code>GOODS-S_115.600_+56.600_at_0.7_arcsec_FWHM.fits</code></div>
+    <div class="preview">
+      <div class="glance">
+        <div>
+          <img src="http://placehold.it/200x200" alt="Collection">
+          <p>2.5&Prime; &times; 2.5&Prime;</p>
+          <p>(R, G, B) = (F125W, F110W, F606W)</p>
+        </div>
+      </div>
+      <div class="comparison">
+        <ol class="blend-tiles">
+          <li>Blend 1<img src="http://placehold.it/128x128" alt="blend"></li>
+          <li>Blend 2<img src="http://placehold.it/128x128" alt="blend"></li>
+          <li>Blend 3<img src="http://placehold.it/128x128" alt="blend"></li>
+          <!-- <li>Blend 4<img src="http://placehold.it/128x128" alt="blend"></li>
+          <li>Blend 5<img src="http://placehold.it/128x128" alt="blend"></li> -->
+        </ol>
+        <ol class="truth-tiles">
+          <li><img src="http://placehold.it/128x128" alt="truth">Truth 1</li>
+          <li><img src="http://placehold.it/128x128" alt="truth">Truth 2</li>
+          <li><img src="http://placehold.it/128x128" alt="truth">Truth 3</li>
+          <!-- <li><img src="http://placehold.it/128x128" alt="truth">Truth 4</li>
+          <li><img src="http://placehold.it/128x128" alt="truth">Truth 5</li> -->
+        </ol>
+      </div>
+    </div>
+    <div class="catalog">
+      <table>
+        <tr><th>ID</th><th>Header</th><th>Header</th><th>Header</th><th>Header</th></tr>
+        <tr><td>1</td><td>Data</td><td>Data</td><td>Data</td><td>Data</td></tr>
+        <tr><td>2</td><td>Data</td><td>Data</td><td>Data</td><td>Data</td></tr>
+        <tr><td>3</td><td>Data</td><td>Data</td><td>Data</td><td>Data</td></tr>
+        <tr><td>4</td><td>Data</td><td>Data</td><td>Data</td><td>Data</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
