@@ -3,3 +3,5 @@ __pycache__
 ._*
 .ipynb_checkpoints
 circus/*.pid
+*.fits
+.idea
